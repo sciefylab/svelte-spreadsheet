@@ -1,6 +1,6 @@
 {
 	"name": "@sciefylab/svelte-spreadsheet",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -56,13 +56,13 @@
 		"spreadsheet"
 	],
 	"author": "SciefyLab @sciefylab",
-	"license": "MIT", 
+	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/sciefylab/svelte-spreadsheet.git" 
+		"url": "git+https://github.com/sciefylab/svelte-spreadsheet.git"
 	},
 	"bugs": {
-		"url": "https://github.com/sciefylab/svelte-spreadsheet/issues" 
+		"url": "https://github.com/sciefylab/svelte-spreadsheet/issues"
 	},
 	"homepage": "https://github.com/sciefylab/svelte-spreadsheet#readme"
 }
