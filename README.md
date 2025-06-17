@@ -13,7 +13,6 @@ A highly customizable and interactive spreadsheet component for Svelte, built wi
 * **Dependent Dropdowns**: Create cascading selects where one dropdown's options depend on another's value (e.g., cities based on the selected country).
 * **Computed Columns**: Define columns whose values are calculated from other cells in the same row.
 * **Programmatic Access**: Easily get all current data from the spreadsheet for submission or processing.
-* **Multi-Worksheet Support**: Manage multiple sheets within a single spreadsheet instance.
 
 ---
 

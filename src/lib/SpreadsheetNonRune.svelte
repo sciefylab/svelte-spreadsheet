@@ -1,3 +1,4 @@
+<!-- @component({ runes: false }) -->
 <script>
   import Datepicker from './DatePickerNonRune.svelte'; // Menggunakan versi NonRune dari Datepicker
   import { tick, onMount, onDestroy } from 'svelte';

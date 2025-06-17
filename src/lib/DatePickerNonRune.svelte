@@ -1,6 +1,5 @@
+<!-- @component({ runes: false }) -->
 <script>
-  import { onMount, onDestroy } from 'svelte';
-
   export let value = ""; // YYYY-MM-DD
   export let onSelect = (date) => {}; // Callback for selected date (YYYY-MM-DD)
   export let visible = false; // Control visibility
@@ -358,6 +357,3 @@
     </div>
   </div>
 {/if}
-<style>
-  /* Tailwind CSS classes are now used directly in the HTML */
-</style>

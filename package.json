@@ -3,12 +3,13 @@
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build && npm run prepack",
+		"build": "vite build && npm run package",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
-		"prepack": "svelte-kit sync && svelte-package && publint",
+		"package": "svelte-kit sync && svelte-package && publint",
 		"format": "prettier --write .",
-		"lint": "prettier --check . && eslint ."
+		"lint": "prettier --check . && eslint .",
+		"prepublishOnly": "npm run package"
 	},
 	"files": [
 		"dist",
@@ -32,8 +33,8 @@
 		"@eslint/compat": "^1.2.5",
 		"@eslint/js": "^9.18.0",
 		"@sveltejs/adapter-auto": "^6.0.0",
-		"@sveltejs/kit": "^2.16.0",
-		"@sveltejs/package": "^2.0.0",
+		"@sveltejs/kit": "^2.21.5",
+		"@sveltejs/package": "^2.3.11",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@tailwindcss/vite": "^4.0.0",
 		"eslint": "^9.18.0",

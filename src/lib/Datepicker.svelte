@@ -358,6 +358,3 @@
     </div>
   </div>
 {/if}
-<style>
-  /* Tailwind CSS classes are now used directly in the HTML */
-</style>
