@@ -1,9 +1,9 @@
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	compilerOptions: {
-		runes: true // Eksplisit mengaktifkan Runes untuk Svelte 5
-	},
+	// compilerOptions: {
+	// 	runes: true // Eksplisit mengaktifkan Runes untuk Svelte 5
+	// },
 	kit: {
 
 		// files: {
