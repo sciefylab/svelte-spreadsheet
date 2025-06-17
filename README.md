@@ -59,8 +59,8 @@ Define your column structure, initial data, and render the component. Use the `b
     width: "150px",
     // Fetch options from an external API
     fetchOptions: async (query) => {
-      try {
-        const response = await fetch('[https://jsonplaceholder.typicode.com/users](https://jsonplaceholder.typicode.com/users)');
+      try { // Corrected URL string
+        const response = await fetch('https://jsonplaceholder.typicode.com/users');
         const users = await response.json();
         const options = users.map(user => ({ value: String(user.id), label: user.name }));
         // Filter results based on user input
@@ -82,7 +82,6 @@ Define your column structure, initial data, and render the component. Use the `b
     label: "Birthdate",
     type: "date",
     width: "150px",
-    format: "dd/mm/yyyy", // Custom date format
   },
   {
     key: "country",
@@ -94,7 +93,7 @@ Define your column structure, initial data, and render the component. Use the `b
       { value: "ca", label: "Canada" },
       { value: "mx", label: "Mexico" },
     ],
-    // Handle changes to update other cells
+    // Handle changes to update other cells; all parameters (selectedOption, currentCell, fullRowData, allColumns) are available
     onChange: (selectedOption) => {
       if (selectedOption.value === "us") {
         return [{ targetColumnKey: "city", value: { value: "ny", label: "New York" } }];
@@ -173,6 +172,10 @@ Define your column structure, initial data, and render the component. Use the `b
 />
 ```
 
+### 📸 Screenshot
+
+![Screenshot of the Spreadsheet component](./static/svelte-spreadsheet1.png)
+
 ---
 
 ## ⚙️ API Reference
@@ -182,28 +185,26 @@ Define your column structure, initial data, and render the component. Use the `b
 | Prop                | Type            | Description                                                                                             |
 | ------------------- | --------------- | ------------------------------------------------------------------------------------------------------- |
 | `columns`           | `Array<Object>` | **Required.** An array of objects defining the structure and behavior of each column.                   |
-| `initialData`       | `Array<Object>` | An array of objects representing the initial rows of data for the default worksheet.                    |
-| `initialWorksheets` | `Array<Object>` | An array for multi-sheet support. Each object should contain `{ name: string, data: Array<Object> }`.   |
+| `initialData`       | `Array<Object>` | An array of objects representing the initial rows of data. This is the primary way to provide data.     |
+| `initialWorksheets` | `Array<Object>` | Alternative to `initialData`. Expects `[{ name: string, grid: Array<Array<{value: any}>> }]`, where `grid` is pre-formatted. If `initialData` is present, it takes precedence. Currently, only the first worksheet is used. |
 | `rowHeight`         | `number`        | The height of each row in pixels. Defaults to `30`.                                                     |
-| `showAddRow`        | `boolean`       | If `true`, displays a button to add new rows. Defaults to `true`.                                       |
 
 ### Column Configuration
 
 Each object in the `columns` prop can have the following properties:
 
-| Key                      | Type                                   | Description                                                                                                   |
-| ------------------------ | -------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Key                      | Type                                                        | Description                                                                                                   |
+| ------------------------ | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | `key`                    | `string`                               | **Required.** The unique identifier for the column, corresponding to a key in the data objects.               |
 | `label`                  | `string`                               | **Required.** The display name for the column header.                                                         |
 | `type`                   | `string`                               | The cell type. Can be `'text'`, `'number'`, `'date'`, `'select'`, `'function'`. Defaults to `'text'`.           |
 | `width`                  | `string`                               | The CSS width of the column (e.g., `'150px'`).                                                                  |
 | `readonly`               | `boolean`                              | If `true`, the cells in this column cannot be edited.                                                         |
 | `options`                | `Array`                                | An array of `{ value, label }` objects for `select` type columns.                                             |
-| `fetchOptions`           | `async (query, params) => Array`       | An async function for `select` type to fetch options dynamically. `query` is the search term.                 |
+| `fetchOptions`           | `async (query, params) => Array`                            | An async function for `select` type to fetch options dynamically. `query` is the search term.                 |
 | `fetchParamsFromColumns` | `Array<string>`                        | An array of column keys whose values will be passed as the `params` object to `fetchOptions`.                 |
-| `onChange`               | `(selected, cell, row, cols) => Array` | A callback for `select` type that triggers when the value changes. Can return an array of updates for other cells. |
+| `onChange`               | `(selectedOption, currentCell, fullRowData, allColumnsConfig) => Array` | A callback for `select` type that triggers when the value changes. `selectedOption` is the chosen `{value, label}`. `currentCell` is the grid cell object. `fullRowData` is an object of the current row's data. `allColumnsConfig` is the full columns definition. Can return an array of updates for other cells. |
 | `function`               | `(rowData) => any`                     | A function for `function` type that computes the cell's value based on the current `rowData`.                 |
-| `format`                 | `string`                               | A format string (e.g., `'dd/mm/yyyy'`) for `date` type columns.                                               |
 
 ### Component Methods
 

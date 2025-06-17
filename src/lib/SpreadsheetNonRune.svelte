@@ -6,6 +6,7 @@
   export let initialData;
   export let columns;
   export let initialWorksheets = null;
+  export let rowHeight = 30; // Default row height in pixels
 
   let columnWidths;
   $: columnWidths =
@@ -1225,24 +1226,27 @@
     </thead>
     <tbody>
       {#if activeSheet && activeSheet.grid} {#each activeSheet.grid as row, i}
-        <tr class="{ i === focusedCell.row ? 'bg-blue-100' : 'bg-white' } transition-colors duration-300 ease-in-out">
-          <th class="border border-gray-300 p-0 relative overflow-hidden font-normal text-center { i === focusedCell.row ? 'bg-transparent' : 'bg-white' } w-8 min-w-[2rem]">{i + 1}</th>
+        <tr class="{ i === focusedCell.row ? 'bg-blue-100' : 'bg-white' } transition-colors duration-300 ease-in-out" style="height: {rowHeight}px;">
+          <th class="border border-gray-300 p-0 relative overflow-hidden font-normal text-center { i === focusedCell.row ? 'bg-transparent' : 'bg-white' } w-8 min-w-[2rem]" style="height: {rowHeight}px;">{i + 1}</th>
           {#each row as cell, j}
             {@const isFocused = i === focusedCell.row && j === focusedCell.col}
             {@const isDropdownVisibleForCell = dropdownState.visible && dropdownState.row === i && dropdownState.col === j}
             {@const isDatepickerVisibleForCell = datepickerState.visible && datepickerState.row === i && datepickerState.col === j}
             {@const hasErrorForCell = !!cellErrors[`${i}-${j}`]}
             {@const isOverflowVisible = isDropdownVisibleForCell || isDatepickerVisibleForCell || isFocused || hasErrorForCell}
+            {@const isReadonlyCell = columnReadonly[j] || columnTypes[j] === "function"}
             <td
-              role="gridcell"
-              class="border border-gray-300 p-0 text-left relative { i === focusedCell.row ? 'bg-transparent' : 'bg-white' } {isOverflowVisible ? '!overflow-visible' : 'overflow-hidden'}"
+              class="border border-gray-300 p-0 text-left relative {isOverflowVisible ? '!overflow-visible' : 'overflow-hidden'}"
               class:outline={isFocused}
               class:outline-2={isFocused}
               class:outline-sky-500={isFocused}
               class:outline-offset-[-1px]={isFocused && columnTypes[j] === 'select' && columnReadonly[j]}
               class:outline-offset-[-2px]={isFocused && !(columnTypes[j] === 'select' && columnReadonly[j])}
-              class:cursor-not-allowed={columnReadonly[j] || columnTypes[j] === "function"}
-              class:bg-gray-50={(columnReadonly[j] || columnTypes[j] === "function") && !(i === focusedCell.row)}
+              class:cursor-not-allowed={isReadonlyCell}
+              class:bg-gray-100={isReadonlyCell}
+              class:dark:bg-gray-700={isReadonlyCell}
+              class:bg-transparent={!isReadonlyCell && i === focusedCell.row}
+              class:bg-white={!isReadonlyCell && i !== focusedCell.row}
               class:fill-drag-highlight={
                 isDragging &&
                 dragStart && dragEnd &&
@@ -1259,7 +1263,8 @@
               }
               data-row={i}
               data-col={j}
-              style="width: {columnWidths[j]}; min-width: {columnWidths[j]}"
+              style="width: {columnWidths[j]}; min-width: {columnWidths[j]}; height: {rowHeight}px;"
+              role="gridcell"
             >
               {#if columnTypes[j] === "select"}
                 <div class="relative w-full h-full flex items-center">
@@ -1280,7 +1285,7 @@
                     onkeydown={(e) => handleDropdownKeydown(e, i, j)}
                     placeholder="Type to search..."
                     readonly={columnReadonly[j]} 
-                    class="w-full h-8 border-none p-2 box-border outline-none text-[0.9rem] pr-6 {columnReadonly[j] ? 'cursor-not-allowed bg-gray-100 dark:bg-gray-700' : ''}"
+                    class="w-full h-full border-none p-2 box-border outline-none text-[0.9rem] pr-6 {columnReadonly[j] ? 'cursor-not-allowed bg-transparent dark:bg-transparent' : ''}"
                     aria-invalid={cellErrors[`${i}-${j}`] ? "true" : "false"}
                     aria-describedby={cellErrors[`${i}-${j}`] ? `error-${i}-${j}` : undefined}
                     aria-haspopup="listbox"
@@ -1347,7 +1352,7 @@
                     onblur={(e) => handleDateBlur(i, j, e)}
                     placeholder="dd/mm/yyyy"
                     readonly={columnReadonly[j]} 
-                    class="w-full h-8 border-none p-2 box-border outline-none text-[0.9rem] pr-8 {columnReadonly[j] ? 'cursor-not-allowed' : ''}"
+                    class="w-full h-full border-none p-2 box-border outline-none text-[0.9rem] pr-8 {columnReadonly[j] ? 'cursor-not-allowed bg-transparent dark:bg-transparent' : ''}"
                     aria-invalid={cellErrors[`${i}-${j}`] ? "true" : "false"}
                     aria-describedby={`calendar-icon-${i}-${j}${cellErrors[`${i}-${j}`] ? ` error-${i}-${j}` : ''}`}
                   />
@@ -1418,7 +1423,7 @@
                   onblur={(e) => columnTypes[j] === 'number' ? handleBlurForNumber(i,j,e) : null}
                   readonly={columnReadonly[j] || columnTypes[j] === "function"}
                   placeholder={columnTypes[j] === 'number' ? '0' : 'Enter value'}
-                  class="w-full h-8 border-none p-2 box-border outline-none text-[0.9rem] {(columnReadonly[j] || columnTypes[j] === 'function') ? 'cursor-not-allowed bg-gray-100 dark:bg-gray-700' : ''}"
+                  class="w-full h-full border-none p-2 box-border outline-none text-[0.9rem] {(columnReadonly[j] || columnTypes[j] === 'function') ? 'cursor-not-allowed bg-transparent dark:bg-transparent' : ''}"
                   aria-invalid={cellErrors[`${i}-${j}`] ? "true" : "false"}
                   aria-describedby={cellErrors[`${i}-${j}`] ? `error-${i}-${j}` : undefined}
                 />

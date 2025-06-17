@@ -131,5 +131,5 @@
     Get All Data (Test Page 2)
   </button>
 
-  <SpreadsheetNonRune bind:this={spreadsheetComponent} initialData={initialDataTest2} columns={columnsTest2} />
+  <SpreadsheetNonRune bind:this={spreadsheetComponent} initialData={initialDataTest2} columns={columnsTest2} rowHeight={40} />
 </div>

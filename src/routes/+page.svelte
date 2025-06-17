@@ -158,12 +158,22 @@ const initialWorksheets = null;
 
 </script>
 
+<div class="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 p-4 sm:p-8">
+  <div class="max-w-5xl mx-auto bg-white dark:bg-gray-800 shadow-xl rounded-lg p-6 sm:p-10">
+    <header class="mb-8 text-center">
+      <h1 class="text-4xl sm:text-5xl font-bold text-sky-600 dark:text-sky-400 mb-4">
+        Svelte Spreadsheet Demo
+      </h1>
+    </header>
 
-<h1>Welcome to your library project</h1>
-<p>Create your package using @sveltejs/package and preview/showcase your work with SvelteKit</p>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
-<button onclick={handleGetAllData} class="my-4 p-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-  Get All Data from Spreadsheet
-</button>
+    <div class="my-8 text-center">
+      <button on:click={handleGetAllData} class="px-6 py-3 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-lg shadow-md transition-colors duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50">
+        Get All Data from Spreadsheet
+      </button>
+    </div>
 
-<Spreadsheet bind:this={spreadsheetComponent} {initialData} {columns} {initialWorksheets} />
+    <div class="mt-8 border dark:border-gray-700 rounded-lg overflow-hidden shadow-lg">
+      <Spreadsheet bind:this={spreadsheetComponent} {initialData} {columns} {initialWorksheets} rowHeight={40} />
+    </div>
+  </div>
+</div>
