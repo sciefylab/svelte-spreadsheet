@@ -1,6 +1,5 @@
 <script>
  import Spreadsheet from '$lib/Spreadsheet.svelte'; // Menggunakan versi Runes
-	import { readonly } from 'svelte/store';
 
  let spreadsheetComponent; // Variabel untuk menyimpan instance komponen Spreadsheet
 
