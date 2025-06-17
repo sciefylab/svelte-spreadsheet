@@ -174,7 +174,7 @@ Define your column structure, initial data, and render the component. Use the `b
 
 ### 📸 Screenshot
 
-![Screenshot of the Spreadsheet component](./static/svelte-spreadsheet1.png)
+![Screenshot of the Spreadsheet component](https://github.com/sciefylab/svelte-spreadsheet/blob/main/static/svelte-spreadsheet1.png)
 
 ---
 
